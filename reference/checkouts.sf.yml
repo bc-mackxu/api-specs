@@ -2436,6 +2436,41 @@ components:
           description: The discounted amount applied within a given context.
           format: double
       x-internal: false
+    CheckoutFee:
+      title: Checkout Fee
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The fee ID.
+          example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        type:
+          type: string
+          description: The type of the fee
+          enum:
+            - custom_fee
+        name:
+          type: string
+          description: Name of the fee.
+          example: Route Package Protection Insurance
+        displayName:
+          type: string
+          description: Display name of the fee targeting customers/shoppers
+          example: Package Protection Insurance
+        cost_inc_tax:
+          type: number
+          description: Cost of the fee including tax
+          example: 10.0
+        cost_ex_tax:
+          type: number
+          description: Cost of the fee excluding tax
+          example: 9.9
+        source:
+          type: string
+          description: The source of the request
+          example: Route
+      x-internal: false
     CheckoutCoupon:
       title: Checkout Coupon
       required:
@@ -3316,6 +3351,11 @@ components:
               description: Coupons applied at checkout level.
               items:
                 $ref: '#/components/schemas/CheckoutCoupon'
+            fees:
+              type: array
+              description: Fees applied at checkout level.
+              items:
+                $ref: '#/components/schemas/CheckoutFee'
             orderId:
               type: string
               description: ''
