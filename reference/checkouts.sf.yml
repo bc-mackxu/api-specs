@@ -29,6 +29,7 @@ tags:
   - name: Checkout Gift Certificates
   - name: Checkout Spam Protection
   - name: Checkout Store Credit
+  - name: Checkout Extensions
 paths:
   '/checkouts/{checkoutId}':
     get:
@@ -2320,6 +2321,23 @@ paths:
                 $ref: '#/components/schemas/checkout_Full'
       deprecated: false
       x-codegen-request-body-name: body
+  '/checkouts/extensions':
+    get:
+      tags:
+        - Checkout Extensions
+      summary: Get Checkout Extensions
+      description: Retrieve all Checkout Extension
+      operationId: GetCheckoutExtensions
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CheckoutsExtensions'
 components:
   schemas:
     SpamProtectionRequest:
@@ -4116,6 +4134,38 @@ components:
       properties:
         pickupMethodId:
           type: integer  
+    CheckoutsExtensions:
+      title: Checkouts Extensions
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uuid
+            example: abc12345-6789-0123-4567-890123456789
+          name:
+            type: string
+            example: Example Extension
+          description:
+              type: string
+              example: This is example extension
+          region:
+            type: string
+            enum:
+              - shipping.shippingForm.before
+              - shipping.shippingForm.after
+              - shipping.shippingMethods.before
+              - shipping.shippingMethods.after
+            example: shipping.shippingForm.before
+          origin:
+            type: string
+            format: uri
+            example: https://example.com/
+          url:
+            type: string
+            format: uri
+            example: https://example.com/extension
   responses:
     Checkout:
       description: ''
