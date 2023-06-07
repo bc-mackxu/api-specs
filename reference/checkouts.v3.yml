@@ -28,6 +28,7 @@ tags:
   - name: Checkout Settings
   - name: Checkout Token
   - name: Checkout Fees
+  - name: Checkout Extensions
 security:
   - X-Auth-Token: []
 paths:
@@ -7803,6 +7804,108 @@ paths:
                   order_confirmation_use_custom_checkout_script: false
                   custom_order_confirmation_script_url: 'webdav:vtz-order-confirmation/dist/auto-loader.js'
                 meta: {}
+  '/checkouts/extensions':
+    parameters:     
+      - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+        - Checkout Extensions
+      summary: Get Checkout Extensions
+      description: Retrieve all Checkout Extension
+      operationId: GetCheckoutExtensions
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CheckoutsExtensions'
+    post:
+      tags:
+        - Checkout Extensions
+      summary: Create Checkout Extensions
+      description: Register Checkout Extensions
+      operationId: PostCheckoutExtensions
+      parameters:
+        - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CheckoutExtensionRequest'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CheckoutsExtensions'
+  '/checkouts/extensions/{extensionId}':
+    parameters:
+      - $ref: '#/components/parameters/extensionId'
+      - $ref: '#/components/parameters/Accept'
+    put:
+      tags:
+        - Checkout Extensions
+      summary: Update a Checkout Extensions
+      description: Update Checkout Extensions
+      operationId: PutACheckoutExtension
+      parameters:
+        - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckoutExtensionRequest'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CheckoutsExtensions'
+        '404':
+          description: Error message indicating the extension was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Checkout extension not found
+    delete:
+      tags:
+        - Checkout Extensions
+      summary: Delete Checkout Extension
+      description: Delete a specific checkout extension by extensionId
+      operationId: DeleteACheckoutExtension
+      responses:
+        '204':
+          description: No content, indicating the extension was deleted successfully
+        '404':
+          description: Error message indicating the extension was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Checkout extension not found
   '/checkouts/{checkoutId}/token':
     parameters:
       
@@ -8992,6 +9095,81 @@ components:
           type: string
         custom_checkout_supports_uco_settings:
           type: boolean
+    CheckoutsExtensions:
+        title: Checkouts Extensions
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: abc12345-6789-0123-4567-890123456789
+            name:
+              type: string
+              example: Example Extension
+            description:
+              type: string
+              example: This is example extension
+            region:
+              type: string
+              enum:
+                - shipping.shippingForm.before
+                - shipping.shippingForm.after
+                - shipping.shippingMethods.before
+                - shipping.shippingMethods.after
+              example: shipping.shippingForm.before
+            origin:
+              type: string
+              format: uri
+              example: https://example.com/
+            url:
+              type: string
+              format: uri
+              example: https://example.com/extension
+            enabled:
+              type: boolean
+            created_time:
+              type: string
+              description: Time when the extension was created.
+            updated_time:
+              type: string
+              description: Time when the extension was last updated.
+    CheckoutExtensionRequest:
+      title: Checkout Extension Request
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+          example: "My Extension"
+        description:
+          type: string
+          example: "This is my Extension"
+        region:
+          type: string
+          enum:
+            - shipping.shippingForm.before
+            - shipping.shippingForm.after
+            - shipping.shippingMethods.before
+            - shipping.shippingMethods.after
+          example: "shipping.shippingForm.before"
+        origin:
+          type: string
+          format: uri
+          example: "https://widget.example.com/"
+        url:
+          type: string
+          format: uri
+          example: "https://widget.example.com/checkout"
+        enabled:
+          type: boolean
+          default: false
+      required:
+        - name
+        - region
+        - origin
+        - url
     CheckoutsSettingsRequest:
       title: Checkouts settings request
       type: object
@@ -9827,6 +10005,12 @@ components:
       name: couponCode
       in: path
       description: 'The coupon code value, not the coupon ID.'
+      required: true
+      schema:
+        type: string
+    extensionId:
+      name: extensionId
+      in: path
       required: true
       schema:
         type: string
