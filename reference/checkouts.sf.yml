@@ -2476,11 +2476,11 @@ components:
           type: string
           description: Display name of the fee targeting customers/shoppers
           example: Package Protection Insurance
-        cost_inc_tax:
+        costIncTax:
           type: number
           description: Cost of the fee including tax
           example: 10.0
-        cost_ex_tax:
+        costExTax:
           type: number
           description: Cost of the fee excluding tax
           example: 9.9
