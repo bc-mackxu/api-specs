@@ -8758,7 +8758,7 @@ components:
           type: string
           description: Name of the fee.
           example: Route Package Protection Insurance
-        displayName:
+        display_name:
           type: string
           description: Display name of the fee targeting customers/shoppers
           example: Package Protection Insurance
@@ -9059,10 +9059,14 @@ components:
             - custom_fee
         name:
           type: string
+          minLength: 1
+          maxLength: 50
           description: The name of the fee.
           example: Route Package Protection Insurance
         display_name:
           type: string
+          minLength: 1
+          maxLength: 200
           description: The display name of the fee targeting customers/shoppers.
           example: Package Protection Insurance
         cost:
@@ -9071,6 +9075,8 @@ components:
           example: 7.12
         source:
           type: string
+          minLength: 1
+          maxLength: 50
           description: The source of the request.
           example: Route
       x-internal: false
