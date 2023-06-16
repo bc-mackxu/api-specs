@@ -8757,7 +8757,7 @@ components:
         name:
           type: string
           description: Name of the fee.
-          example: Route Package Protection Insurance
+          example: ROUTEINS
         display_name:
           type: string
           description: Display name of the fee targeting customers/shoppers
@@ -9062,7 +9062,7 @@ components:
           minLength: 1
           maxLength: 50
           description: The name of the fee.
-          example: Route Package Protection Insurance
+          example: ROUTEINS
         display_name:
           type: string
           minLength: 1
