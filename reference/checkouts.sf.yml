@@ -185,6 +185,13 @@ paths:
                 handlingCostTotal: 0
                 taxTotal: 1.22
                 coupons: []
+                fees:
+                  - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                    type: custom_fee
+                    name: ROUTEINS
+                    displayName: Package Protection Insurance
+                    costIncTax: 12.02
+                    costExTax: 10.02
                 taxes:
                   - name: Tax
                     amount: 1.22
@@ -2471,7 +2478,7 @@ components:
         name:
           type: string
           description: Name of the fee.
-          example: Route Package Protection Insurance
+          example: ROUTEINS
         displayName:
           type: string
           description: Display name of the fee targeting customers/shoppers
