@@ -2328,7 +2328,7 @@ paths:
                 $ref: '#/components/schemas/checkout_Full'
       deprecated: false
       x-codegen-request-body-name: body
-  '/checkouts/extensions':
+  '/checkouts-extensions':
     get:
       tags:
         - Checkout Extensions
