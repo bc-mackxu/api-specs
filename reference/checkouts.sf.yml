@@ -190,8 +190,7 @@ paths:
                     type: custom_fee
                     name: ROUTEINS
                     displayName: Package Protection Insurance
-                    costIncTax: 12.02
-                    costExTax: 10.02
+                    cost: 12.02
                 taxes:
                   - name: Tax
                     amount: 1.22
@@ -2483,14 +2482,10 @@ components:
           type: string
           description: Display name of the fee targeting customers/shoppers
           example: Package Protection Insurance
-        costIncTax:
+        cost:
           type: number
-          description: Cost of the fee including tax
+          description: Cost of the fee (include or exclude tax dependent on tax settings, as same as shipping cost)
           example: 10.0
-        costExTax:
-          type: number
-          description: Cost of the fee excluding tax
-          example: 9.9
         source:
           type: string
           description: The source of the request
