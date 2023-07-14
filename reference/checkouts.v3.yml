@@ -7822,7 +7822,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: '#/components/schemas/CheckoutsExtensions'
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CheckoutsExtension'
     post:
       tags:
         - Checkout Extensions
@@ -7835,9 +7837,7 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/CheckoutExtensionRequest'
+              $ref: '#/components/schemas/CheckoutExtensionRequest'
         required: true
       responses:
         '200':
@@ -7848,11 +7848,27 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: '#/components/schemas/CheckoutsExtensions'
+                    $ref: '#/components/schemas/CheckoutsExtension'
   '/checkouts/extensions/{extensionId}':
     parameters:
       - $ref: '#/components/parameters/extensionId'
       - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+        - Checkout Extensions
+      summary: Get a Checkout Extensions
+      description: Retrieve a Checkout Extension by ID
+      operationId: GetCheckoutAExtension
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CheckoutsExtension'
     put:
       tags:
         - Checkout Extensions
@@ -7876,7 +7892,7 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: '#/components/schemas/CheckoutsExtensions'
+                    $ref: '#/components/schemas/CheckoutsExtension'
         '404':
           description: Error message indicating the extension was not found
           content:
@@ -9101,46 +9117,43 @@ components:
           type: string
         custom_checkout_supports_uco_settings:
           type: boolean
-    CheckoutsExtensions:
-        title: Checkouts Extensions
-        type: array
-        items:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
-              example: abc12345-6789-0123-4567-890123456789
-            name:
-              type: string
-              example: Example Extension
-            description:
-              type: string
-              example: This is example extension
-            region:
-              type: string
-              enum:
-                - shipping.shippingForm.before
-                - shipping.shippingForm.after
-                - shipping.shippingMethods.before
-                - shipping.shippingMethods.after
-              example: shipping.shippingForm.before
-            origin:
-              type: string
-              format: uri
-              example: https://example.com/
-            url:
-              type: string
-              format: uri
-              example: https://example.com/extension
-            enabled:
-              type: boolean
-            created_time:
-              type: string
-              description: Time when the extension was created.
-            updated_time:
-              type: string
-              description: Time when the extension was last updated.
+    CheckoutsExtension:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: abc12345-6789-0123-4567-890123456789
+        name:
+          type: string
+          example: Example Extension
+        description:
+          type: string
+          example: This is example extension
+        region:
+          type: string
+          enum:
+            - shipping.shippingForm.before
+            - shipping.shippingForm.after
+            - shipping.shippingMethods.before
+            - shipping.shippingMethods.after
+          example: shipping.shippingForm.before
+        origin:
+          type: string
+          format: uri
+          example: https://example.com/
+        url:
+          type: string
+          format: uri
+          example: https://example.com/extension
+        enabled:
+          type: boolean
+        created_time:
+          type: string
+          description: Time when the extension was created.
+        updated_time:
+          type: string
+          description: Time when the extension was last updated.
     CheckoutExtensionRequest:
       title: Checkout Extension Request
       type: object
